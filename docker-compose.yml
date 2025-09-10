@@ -12,6 +12,7 @@ services:
       - mysql_data:/var/lib/mysql
       # Конфигурации XDMoD
       - xdmod_config:/etc/xdmod
+      - xdmod_etc:/usr/share/xdmod/etc
       # Логи XDMoD
       - xdmod_logs:/var/log/xdmod
       # SLURM данные с хоста
@@ -37,4 +38,5 @@ networks:
 volumes:
   mysql_data:
   xdmod_config:
+  xdmod_etc:
   xdmod_logs:

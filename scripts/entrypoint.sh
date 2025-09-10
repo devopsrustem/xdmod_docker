@@ -211,18 +211,6 @@ ln -sf /usr/share/xdmod/etc/portal_settings.ini /etc/xdmod/portal_settings.ini
 # Исправление пароля в конфигурации XDMoD
 sed -i 's/pass = ""/pass = "secure_xdmod_password_123"/' /usr/share/xdmod/etc/portal_settings.ini
 
-# Создание resources.json для работы shredder
-if [ ! -s "/usr/share/xdmod/etc/resources.json" ]; then
-    cat > /usr/share/xdmod/etc/resources.json << 'EOF'
-[
-    {
-        "resource": "tcluster01",
-        "name": "test2nodes"
-    }
-]
-EOF
-fi
-
 # Настройка cron для XDMoD
 if [ ! -f "/etc/cron.d/xdmod" ]; then
     echo "Создание cron заданий для XDMoD..."
