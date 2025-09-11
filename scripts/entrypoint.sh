@@ -216,13 +216,13 @@ if [ ! -f "/etc/cron.d/xdmod" ]; then
     echo "Создание cron заданий для XDMoD..."
     cat > /etc/cron.d/xdmod << 'EOF'
 # Импорт данных SLURM каждые 15 минут (xdmod-slurm-helper + xdmod-ingestor)
-*/15 * * * * root /usr/local/bin/export-slurm-daily.sh
+*/15 * * * * root /usr/local/bin/auto-import.sh >> /var/log/slurm-import.log 2>&1
 
 # Агрегация данных раз в сутки в 2:00
-0 2 * * * root /usr/share/xdmod/bin/xdmod-ingestor --aggregate >> /var/log/xdmod/aggregate.log 2>&1
+0 2 * * * root /usr/share/xdmod/bin/xdmod-ingestor --aggregate >> /var/log/xdmod/ingestor.log 2>&1
 
 # Контроль качества в 2:30
-30 2 * * * root /usr/share/xdmod/bin/xdmod-build-filter-lists >> /var/log/xdmod/qc.log 2>&1
+30 2 * * * root /usr/share/xdmod/bin/xdmod-build-filter-lists >> /var/log/xdmod/ingestor.log 2>&1
 
 # Очистка старых логов
 0 3 * * * root find /var/log/xdmod -name "*.log" -mtime +7 -delete

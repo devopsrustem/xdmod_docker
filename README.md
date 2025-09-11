@@ -2,6 +2,22 @@
 
 Docker-контейнер с Open XDMoD для мониторинга SLURM кластера.
 
+## ❗ ВАЖНО: Настройка GPU поддержки
+
+**Перед запуском контейнера** обязательно добавьте в `/etc/slurm/slurm.conf` строку:
+
+```bash
+AccountingStorageTRES=cpu,mem,energy,node,billing,fs/disk,vmem,pages,gres/gpu
+```
+
+После `AccountingStorageUser=slurm` и перезапустите SLURM:
+
+```bash
+sudo systemctl restart slurmctld slurmdbd
+```
+
+**Без этого GPU задания не будут отображаться в XDMoD!**
+
 ## Quick Start
 
 ```bash
@@ -215,7 +231,12 @@ docker exec xdmod-container service apache2 restart
    - Пользователь `admin` теперь привязан к правильной организации
    - ACL конфигурация обновляется автоматически
 
-4. **Оптимизация производительности**
+4. **Поддержка GPU мониторинга**
+   - Добавлена инструкция по настройке `gres/gpu` в `AccountingStorageTRES` SLURM
+   - GPU задания корректно отображаются в XDMoD отчетах после настройки
+   - Поддержка фильтрации по количеству GPU
+
+5. **Оптимизация производительности**
    - Увеличены лимиты PHP: memory_limit=4G, max_execution_time=60с
    - Включено логирование медленных запросов MySQL
 
