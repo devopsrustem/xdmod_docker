@@ -1,0 +1,7 @@
+[
+    {
+        "resource": "tcluster01",
+        "name": "testcluster01",
+        "description": "Test Cluster 01"
+    }
+]

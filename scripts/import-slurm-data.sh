@@ -45,12 +45,12 @@ if ! ldd "$SACCT_PATH" 2>&1 | grep -q "not found"; then
         
         # Импорт через shredder
         echo "Импортируем данные в XDMoD..."
-        if xdmod-shredder -r "$CLUSTER_NAME" -f slurm -i /tmp/slurm_import_$$.log; then
+        if /usr/share/xdmod/bin/xdmod-shredder -r "$CLUSTER_NAME" -f slurm -i /tmp/slurm_import_$$.log; then
             echo "✓ Данные успешно импортированы в shredder"
             
             # Запуск инжестора
             echo "Обновляем агрегатные таблицы..."
-            if xdmod-ingestor -q; then
+            if /usr/share/xdmod/bin/xdmod-ingestor -q; then
                 echo "✓ Агрегатные таблицы обновлены"
             else
                 echo "⚠ Ошибка при обновлении агрегатных таблиц"
@@ -75,11 +75,11 @@ else
         for file in /opt/xdmod-data/slurm-export/*.log; do
             [ -f "$file" ] || continue
             echo "Обрабатываем файл: $(basename $file)"
-            xdmod-shredder -r "$CLUSTER_NAME" -f slurm -i "$file"
+            /usr/share/xdmod/bin/xdmod-shredder -r "$CLUSTER_NAME" -f slurm -i "$file"
             # Перемещаем обработанный файл
             mv "$file" "${file}.processed"
         done
-        xdmod-ingestor -q
+        /usr/share/xdmod/bin/xdmod-ingestor -q
     else
         echo "Директория /opt/xdmod-data/slurm-export не найдена"
         echo "Создайте её и поместите туда экспортированные данные SLURM"

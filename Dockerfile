@@ -55,10 +55,14 @@ RUN groupadd -r xdmod || true && \
 
 # Настройка PHP для Open XDMoD
 RUN echo "date.timezone = UTC" >> /etc/php/7.4/apache2/php.ini && \
-    echo "memory_limit = 2G" >> /etc/php/7.4/apache2/php.ini && \
-    echo "max_execution_time = 300" >> /etc/php/7.4/apache2/php.ini && \
+    echo "memory_limit = 4G" >> /etc/php/7.4/apache2/php.ini && \
+    echo "max_execution_time = 600" >> /etc/php/7.4/apache2/php.ini && \
+    echo "max_input_vars = 10000" >> /etc/php/7.4/apache2/php.ini && \
+    echo "post_max_size = 256M" >> /etc/php/7.4/apache2/php.ini && \
+    echo "upload_max_filesize = 256M" >> /etc/php/7.4/apache2/php.ini && \
     echo "date.timezone = UTC" >> /etc/php/7.4/cli/php.ini && \
-    echo "memory_limit = 2G" >> /etc/php/7.4/cli/php.ini
+    echo "memory_limit = 4G" >> /etc/php/7.4/cli/php.ini && \
+    echo "max_execution_time = 0" >> /etc/php/7.4/cli/php.ini
 
 # Включение необходимых модулей Apache
 RUN a2enmod rewrite ssl headers php7.4 proxy proxy_fcgi

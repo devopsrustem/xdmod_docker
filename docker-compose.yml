@@ -2,7 +2,7 @@ services:
   xdmod:
     build: .
     image: xdmod
-    container_name: xdmod
+    container_name: xdmod-container
     hostname: xdmod.tcluster01.msu270
     ports:
       - "8081:80"
@@ -29,11 +29,11 @@ services:
       - TZ=UTC
     restart: unless-stopped
     networks:
-      - xdmod-network-default
+      - xdmod-network
 
 networks:
-  xdmod-network-default:
-    name: xdmod-network-default
+  xdmod-network:
+    name: xdmod-network
 
 volumes:
   mysql_data:

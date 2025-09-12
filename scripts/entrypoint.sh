@@ -100,7 +100,8 @@ prompt = no
 C = RU
 ST = Moscow
 L = Moscow
-O = Company
+O = MSU
+OU = IT Department
 CN = 10.36.80.9
 
 [v3_req]
@@ -112,6 +113,7 @@ subjectAltName = @alt_names
 [alt_names]
 IP.1 = 10.36.80.9
 DNS.1 = localhost
+DNS.2 = xdmod.tcluster01.msu270
 EOF
     
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
@@ -151,12 +153,12 @@ fi
 
 # Настройка прав на логи XDMoD
 echo "Настройка прав на логи XDMoD..."
-mkdir -p /usr/share/xdmod/logs
-chown -R www-data:xdmod /usr/share/xdmod/logs
-chmod -R 775 /usr/share/xdmod/logs
-touch /usr/share/xdmod/logs/exceptions.log
-chown www-data:xdmod /usr/share/xdmod/logs/exceptions.log
-chmod 664 /usr/share/xdmod/logs/exceptions.log
+mkdir -p /usr/share/xdmod/logs /var/log/xdmod /var/log/slurm
+chown -R www-data:xdmod /usr/share/xdmod/logs /var/log/xdmod
+chmod -R 775 /usr/share/xdmod/logs /var/log/xdmod
+touch /usr/share/xdmod/logs/exceptions.log /var/log/xdmod/ingestor.log /var/log/slurm-import.log
+chown www-data:xdmod /usr/share/xdmod/logs/exceptions.log /var/log/xdmod/ingestor.log /var/log/slurm-import.log
+chmod 664 /usr/share/xdmod/logs/exceptions.log /var/log/xdmod/ingestor.log /var/log/slurm-import.log
 
 # Исправление организации для admin пользователя
 echo "Обновление организации для admin..."
